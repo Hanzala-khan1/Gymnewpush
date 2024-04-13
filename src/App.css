@@ -1,38 +1,122 @@
-.App {
-  text-align: center;
+a {
+  text-decoration: none !important
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.overflowx {
+  overflow-x: hidden;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+
+input::placeholder {
+  color: rgb(104, 104, 104) !important;
+  /* Make placeholder text transparent */
+  /* filter: blur(5px);   Apply a blur effect to the transparent text */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+textarea::placeholder {
+  color: rgb(104, 104, 104) !important;
+  /* Make placeholder text transparent */
+  /* filter: blur(5px);   Apply a blur effect to the transparent text */
+}
+
+.error {
+  color: rgb(171 4 4);
+  font-size: 14px;
+}
+
+.image-previews {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+
+.image-preview {
+  margin: 5px;
+  border: 1px solid #ddd;
+  padding: 5px;
+}
+
+.password-toggle {
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 35%;
+  transform: translateY(-50%);
+  color: #999;
+}
+
+.spinner-container {
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  /* Center horizontally */
+  align-items: center;
+  /* Center vertically */
+  height: 100vh;
+  /* Take up full viewport height */
 }
 
-.App-link {
-  color: #61dafb;
+.spinner-container .spinner-wrapper {
+  width: 96px;
+  /* Set desired width for the spinner */
+  height: 96px;
+  /* Set desired height for the spinner */
 }
 
-@keyframes App-logo-spin {
+
+.loading {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.loading.show {
+  display: block;
+}
+
+.spinner {
+  /* Style your spinner here */
+  width: 50px;
+  height: 50px;
+  margin: auto;
+  border: 5px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.page-link {
+  background-color: #302e2e !important;
+  color: white !important;
+}
+
+.page-item.active .page-link {
+  background-color: #0a0a0a !important;
+  color: white !important;
+}
+
+
+.custom-carousel .carousel-indicators button {
+  background-color: #fff;
+  border-radius: 100px; /* Indicator circle color */
+}
+
+.carousel-image {
+  height: 300px; /* Fixed height for carousel images */
+  object-fit: cover; /* Maintain aspect ratio and cover container */
 }
