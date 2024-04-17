@@ -8,7 +8,8 @@ import { Bounce, toast, ToastContainer } from 'react-toastify';
 import { hideLoading, Rotating, showLoading } from '../components/Spinner';
 import breadcrup from "../assets/img/breadcrumb-bg.jpg";
 import loginImg from "../assets/img/jimLogin.jpg";
-import {  useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { App_host } from '../utils/hostData';
 
 const RegisterUserSchema = Yup.object().shape({
     full_name: Yup.string().required('Full Name is required !'),
@@ -16,6 +17,7 @@ const RegisterUserSchema = Yup.object().shape({
     password: Yup.string().min(6, 'Password must be at least 6 characters !').required('Password is required !'),
     phone: Yup.string().matches(/^\d+$/, 'Invalid phone number !'),
     city: Yup.string().required('City is required !'),
+    package: Yup.string().required('packge is required !'),
     description: Yup.string(),
     images: Yup.array()
 });
@@ -26,19 +28,19 @@ const RegisterIntoJim = () => {
     const id = queryParams.get('id');
     const image = queryParams.get('image');
     const [showPassword, setShowPassword] = useState(false);
+
     const [showImages, setShowImages] = useState([]);
     const inputRef = useRef(null)
-
+    const navigate = useNavigate()
+    const [packagesData, SetPackagesData] = useState([]);
 
 
     const handleSubmit = async (values, formikBag) => {
         try {
-            console.log("ithyyy aaaa")
             let formValues = await RegisterUserSchema.validate(values, { abortEarly: false });
             // let formValues = values
 
             formValues["BusinessLocation"] = id
-            console.log("form ny value cha diti ", formValues)
             const formData = new FormData();
 
 
@@ -46,7 +48,6 @@ const RegisterIntoJim = () => {
                 if (key !== 'images') {
                     formData.append(key, value);
                 }
-                console.log("key ::", formData[key])
             });
 
 
@@ -56,8 +57,7 @@ const RegisterIntoJim = () => {
                 });
             }
 
-            console.log("form Data ny  value cha diti ", formData)
-            const response = await axios.post('http://localhost:8000/v1/user/addUser', formData, {
+            const response = await axios.post(`${App_host}/user/addUser`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -89,8 +89,10 @@ const RegisterIntoJim = () => {
                 });
             }
             formikBag?.resetForm();
+            setTimeout(() => {
+                navigate('/')
+            }, 2000);
         } catch (error) {
-            console.log("error.response.data.message", error)
             toast.error(error?.response?.data?.message, {
                 position: "top-right",
                 autoClose: 5000,
@@ -107,6 +109,30 @@ const RegisterIntoJim = () => {
             formikBag?.setSubmitting(false);
         }
     };
+
+    let params = {
+        page: 1,
+        limit: 20,
+        is_jim_package: true,
+        BusinessLocation: id,
+        is_admin_package: false
+    }
+
+    const getPackagesList = async () => {
+        try {
+            const response = await axios.get(`${App_host}/packages/getPackages`, {
+                params: params,
+            });
+
+            let { results, ...otherPages } = response.data.data
+            SetPackagesData(results);
+        } catch (error) {
+            console.error('Error fetching users:', error);
+        }
+    }
+    useEffect(() => {
+        getPackagesList()
+    }, [])
 
     return (
         <>
@@ -139,6 +165,7 @@ const RegisterIntoJim = () => {
                                         phone: '',
                                         city: '',
                                         description: '',
+                                        package: '',
                                         images: [],
                                     }}
                                     validationSchema={RegisterUserSchema}
@@ -169,6 +196,26 @@ const RegisterIntoJim = () => {
 
                                             <ErrorMessage name="city" component="span" className="error" />
                                             <Field type="text" name="city" placeholder="City" />
+
+                                            <Field
+                                                as="select"
+                                                name="package"
+                                                className="form-select"
+                                                aria-label="Select Package"
+                                                onChange={(e) => {
+                                                    const selectedPackageId = e.target.value;
+                                                    setFieldValue("package", selectedPackageId);
+                                                }}
+                                            >
+                                                <option value="" style={{ background: "#151515" }}>Select Package</option>
+                                                {packagesData.length > 0 &&
+                                                    packagesData.map((item) => (
+                                                        <option key={item._id} value={item._id} className='justify-content-between' style={{ background: "#151515" }}>
+                                                            {item.name}  -------------- $ {item.price}
+                                                        </option>
+                                                    ))}
+                                            </Field>
+                                            <ErrorMessage name="package" component="span" className="error" />
 
                                             <Field as="textarea" name="description" placeholder="Description" />
                                             {/* <div className='w-100 h-20 my-2' onClick={HandleselectImage} style={{color:'white'}}>

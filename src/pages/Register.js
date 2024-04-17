@@ -8,6 +8,8 @@ import { Bounce, toast, ToastContainer } from 'react-toastify';
 import { hideLoading, Rotating, showLoading } from '../components/Spinner';
 import breadcrup from "../assets/img/breadcrumb-bg.jpg";
 import loginImg from "../assets/img/jimLogin.jpg";
+import { App_host } from '../utils/hostData';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterGymSchema = Yup.object().shape({
     full_name: Yup.string().required('Full Name is required !'),
@@ -18,7 +20,7 @@ const RegisterGymSchema = Yup.object().shape({
     phone: Yup.string().matches(/^\d+$/, 'Invalid phone number !'),
     city: Yup.string().required('City is required !'),
     description: Yup.string(),
-    images: Yup.array()
+    images: Yup.array().min(1, 'At least one image is required').required('Image is required'),
 });
 
 const Register = () => {
@@ -31,13 +33,12 @@ const Register = () => {
         inputRef.current.click()
     }
 
-
+    const navigate = useNavigate()
     const handleSubmit = async (values, formikBag) => {
         try {
             console.log("a gaya aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", formikBag)
 
             const formValues = await RegisterGymSchema.validate(values, { abortEarly: false });
-
             const formData = new FormData();
 
             // Append non-file fields
@@ -45,7 +46,7 @@ const Register = () => {
                 if (key !== 'images') {
                     formData.append(key, value);
                 }
-                console.log("key ::",formData[key])
+                console.log("key ::", formData[key])
             });
 
             // Append all images under the same key 'images'
@@ -54,8 +55,8 @@ const Register = () => {
                     formData.append('images', image);
                 });
             }
-            console.log("-------------------------------",[...formData]);
-            const response = await axios.post('http://localhost:8000/v1/Jim/addJim', formData, {
+            console.log("-------------------------------", [...formData]);
+            const response = await axios.post(`${App_host}/Jim/addJim`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -88,6 +89,9 @@ const Register = () => {
                 });
             }
             formikBag?.resetForm();
+           setTimeout(() => {
+               navigate('/')
+            }, 2000);
         } catch (error) {
             console.log("error.response.data.message", error)
             toast.error(error?.response?.data?.message, {
@@ -197,6 +201,8 @@ const Register = () => {
                                                     }}
                                                 />
                                             </div> */}
+                                            <ErrorMessage name="images" component="span" className="error" />
+
                                             <input
                                                 type="file"
                                                 name="images"
@@ -205,11 +211,10 @@ const Register = () => {
                                                     const files = Array.from(event.currentTarget.files);
                                                     console.log(files)
                                                     setFieldValue("images", files);
-
-
                                                 }}
 
-                                                accept="image/*" />
+                                                accept="image/*"
+                                            />
 
                                             <button type="submit" onClick={handleSubmit} disabled={isSubmitting}>
                                                 {isSubmitting ? "submitting ...." : 'Submit'}

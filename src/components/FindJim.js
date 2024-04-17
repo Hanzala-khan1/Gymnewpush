@@ -3,6 +3,7 @@ import jimimage from "../assets/img/gym.png"
 import Slider from "../utils/Slider";
 import data from '../utils/data';
 import axios from 'axios';
+import { App_host } from '../utils/hostData';
 
 const FindJim = () => {
     const [jim, setJim] = useState([]);
@@ -10,7 +11,7 @@ const FindJim = () => {
     useEffect(() => {
         const fetchJim = async () => {
             try {
-                const response = await axios.get("http://localhost:8000/v1/Jim/getAllBusinessLocation");
+                const response = await axios.get(`${App_host}/Jim/getAllBusinessLocation?page=1&limit=10`);
                 setJim(response.data.data.results);
             } catch (error) {
                 console.error("Error fetching gym data:", error);

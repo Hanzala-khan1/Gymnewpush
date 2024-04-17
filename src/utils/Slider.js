@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import "./styles.css";
 import jimimage from "../assets/img/gym.png";
+import { Link } from "react-router-dom";
 
 const GymSlider = (props) => {
   const [activeSlide, setActiveSlide] = useState(props.activeSlide || 0);
@@ -59,15 +60,18 @@ const GymSlider = (props) => {
         if (i >= startIndex && i <= endIndex) {
           return (
             <div key={item.id} className="gymcards slide" style={getStyles(i)}>
-              <div className="card mx-3">
-                <img src={item.images.length? item.images[0]:jimimage}  className="card-img-top center-img" alt="..." />
+              <div className="card mx-30">
+                <img
+                  src={item.images.length ? item.images[0] : jimimage}
+                  className="card-img-top center-img"
+                  alt="Gym"
+                />
                 <div className="card-body">
                   <h5 className="card-title text-white">{item.name}</h5>
-                  <h6 className="text-white">
+                  <p className="text-white">
                     <i><FontAwesomeIcon icon={faMapMarker} /></i> {item.adress}
-                  </h6>
-                  <br />
-                  <a href="#">Register Now</a>
+                  </p>
+                  <Link to={`/Details?id=${item._id.toString()}`} type="button" className="btn btn-primary text-white">Register Now</Link>
                 </div>
               </div>
             </div>
@@ -122,3 +126,5 @@ const GymSlider = (props) => {
 };
 
 export default GymSlider;
+
+

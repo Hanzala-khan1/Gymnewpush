@@ -5,17 +5,19 @@ import { Link } from 'react-router-dom';
 import { faFaceFrown, faMapMarker } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
+import { App_host } from '../utils/hostData';
 
 const Gym = () => {
     const [jim, setJim] = useState([]);
-    const [totalPages ,SetTotalPages]= useState(0)
+    const [totalPages, SetTotalPages] = useState(0)
     const [currentPage, setCurrentPage] = useState(1);
+    const [nearby, setNearby] = useState(false);
     const itemsPerPage = 12;
 
     useEffect(() => {
         const fetchJim = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/v1/Jim/getAllBusinessLocation?page=${currentPage}&limit=${itemsPerPage}`);
+                const response = await axios.get(`${App_host}/Jim/getAllBusinessLocation?page=${currentPage}&limit=${itemsPerPage}&nearby=${nearby}`);
                 setJim(response.data.data.results);
                 SetTotalPages(response.data.data.totalPages);
             } catch (error) {
@@ -31,6 +33,12 @@ const Gym = () => {
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
+
+    const handleCheckboxChange = (event) => {
+        console.log("here", nearby)
+        setNearby(event.target.checked);
+    };
+    console.log("mmmmmmmmmmmmmmmmmmm", nearby)
 
     return (
         <>
@@ -63,38 +71,54 @@ const Gym = () => {
                             </div>
                         </div>
                     </div>
+                    <div className="row justify-content-end py-3">
+                        <div class="custom-control custom-switch">
+                            <input
+                                type="checkbox"
+                                class="custom-control-input"
+                                id="customSwitch1"
+                                onChange={handleCheckboxChange}
+                                checked={nearby} />
+                            <label class="custom-control-label text-white" for="customSwitch1">
+                                Nearby Gyms
+                            </label>
+                        </div>
+                    </div>
                     <div className="row">
                         {jim.length > 0 ? (
                             jim.map((data, index) => (
                                 <div key={index} className="col-lg-3 col-md-6 col-sm-6 gymcards">
                                     <div className="card mx-30">
-                                        <img src={data.images.length? data.images[0]:jimimg} className="card-img-top center-img" alt="..." />
+                                        <img
+                                            src={data.images.length ? data.images[0] : jimimg}
+                                            className="card-img-top center-img"
+                                            alt="Gym"
+                                        />
                                         <div className="card-body">
-                                            <h5 className="card-title text-white">
-                                                {data.name} {/* Assuming there's a 'name' property */}
-                                            </h5>
+                                            <h5 className="card-title text-white">{data.name}</h5>
                                             <p className="text-white">
                                                 <i><FontAwesomeIcon icon={faMapMarker} /></i> {data.adress}
                                             </p>
-                                            <Link to={`/Details?id=${data._id.toString()}`} >Register Now</Link> 
+                                            <Link to={`/Details?id=${data._id.toString()}`} type="button" className="btn btn-primary text-white">Register Now</Link>
                                         </div>
                                     </div>
                                 </div>
                             ))
                         ) : (
-                            <div className='w-100 d-flex justify-content-center'>
-                                <div className="gymcards d-flex justify-content-center" >
+                            <div className="w-100 d-flex justify-content-center">
+                                <div className="gymcards d-flex justify-content-center">
                                     <div className="card mx-3">
                                         <div className="card-body">
-                                            <i className="w-100 d-flex justify-content-center mb-4"><FontAwesomeIcon icon={faFaceFrown} style={{
-                                                color: "white",
-                                                fontSize: "50px",
-                                            }} /></i>
-                                            <h5 className="card-title text-white">No available Gym's to Show</h5>
-                                            <h6 className="text-white">
-                                            </h6>
-                                            <br />
-                                            <a href="#"></a>
+                                            <i className="w-100 d-flex justify-content-center mb-4">
+                                                <FontAwesomeIcon
+                                                    icon={faFaceFrown}
+                                                    style={{
+                                                        color: 'white',
+                                                        fontSize: '50px',
+                                                    }}
+                                                />
+                                            </i>
+                                            <h5 className="card-title text-white">No available Gyms to Show</h5>
                                         </div>
                                     </div>
                                 </div>
