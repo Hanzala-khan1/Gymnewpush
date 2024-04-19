@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarker, faMobile, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { App_host } from '../utils/hostData';
+import axios from 'axios';
+import { Bounce, toast, ToastContainer } from 'react-toastify';
 
 const ContactSection = ({ background }) => {
     const [formData, setFormData] = useState({
@@ -17,22 +20,62 @@ const ContactSection = ({ background }) => {
 
 
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
+        try {
+            let name = `${formData.firstName + formData.lastName}`
+            let Data = {
+                ...formData,
+                name: name
+            }
+            const response = await axios.post(`${App_host}/contact/addcontact`, Data);
 
-        // Perform form submission (e.g., send formData to server)
-        console.log('Submitting form:', formData);
-
-        // Clear form fields
-        setFormData({
-            firstName: '',
-            lastName: '',
-            email: '',
-            message: ''
-        });
-
-        // Optionally display a success message or perform other actions after submission
-        alert('Form submitted successfully!');
+            if (response?.data?.success) {
+                toast.success('Submitted successfully!', {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                });
+            } else {
+                toast.error("An Error Occured ", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce
+                });
+            }
+            // Clear form fields
+            setFormData({
+                firstName: '',
+                lastName: '',
+                email: '',
+                message: ''
+            });
+        } catch (error) {
+            console.log("error.response.data.message", error)
+            toast.error(error?.response?.data?.message, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+            });
+        }
     };
     return (
         <div>
@@ -102,6 +145,7 @@ const ContactSection = ({ background }) => {
                     </div>
                 </div>
             </section>
+            <ToastContainer />
         </div>
     )
 }

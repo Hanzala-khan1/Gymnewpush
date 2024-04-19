@@ -35,10 +35,8 @@ const Gym = () => {
     };
 
     const handleCheckboxChange = (event) => {
-        console.log("here", nearby)
         setNearby(event.target.checked);
     };
-    console.log("mmmmmmmmmmmmmmmmmmm", nearby)
 
     return (
         <>
