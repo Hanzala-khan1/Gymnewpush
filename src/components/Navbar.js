@@ -88,11 +88,11 @@ const Navbar = () => {
                     padding: '50px 30px 30px 30px',
                     display: 'block',
                 }}>
-                    <div className="canvas-close" onClick={handleopenNav}>
+                    <div className="canvas-close" style={ {display: "flex", justifyContent: "end"} } onClick={handleopenNav}>
                         <FontAwesomeIcon icon={faTimes}></FontAwesomeIcon>
                     </div>
                     <nav className="canvas-menu mobile-menu">
-                        <ul>
+                        <ul style={ {listStyle : "none", paddingTop: "40px"} }>
                             <li className={location.pathname === "/" ? "active" : ""}>
                                 <Link to="/" style={{ textDecoration: 'none' }}>Home</Link>
                             </li>

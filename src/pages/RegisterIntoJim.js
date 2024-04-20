@@ -211,7 +211,7 @@ const RegisterIntoJim = () => {
                                                 {packagesData.length > 0 &&
                                                     packagesData.map((item) => (
                                                         <option key={item._id} value={item._id} className='justify-content-between' style={{ background: "#151515" }}>
-                                                            {item.name}  -------------- $ {item.price}
+                                                            {item.name}   --    ₹{item.price}
                                                         </option>
                                                     ))}
                                             </Field>
