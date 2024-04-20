@@ -94,7 +94,7 @@ const Navbar = () => {
                   style={{
                     borderRadius: "24px",
                     backgroundColor: "#161C27",
-                    marginRight: "10px",
+                    // marginRight: "10px",
                     textDecoration: "none",
                   }}
                 >
