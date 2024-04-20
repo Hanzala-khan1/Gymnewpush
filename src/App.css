@@ -1,11 +1,28 @@
 a {
-  text-decoration: none !important
+  text-decoration: none !important;
 }
 
 .overflowx {
   overflow-x: hidden;
 }
-
+.mobile-navlist {
+  list-style: none;
+  margin-top: 40px;
+}
+.mobile-navlist .mobile-nav-item {
+  padding: 7px 0;
+  border-top: 1px solid #c5c5c5;
+}
+.mobile-navlist .mobile-nav-item:last-child {
+  border-bottom: 1px solid #c5c5c5;
+}
+.header-mobile-overlay {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  z-index: 999999;
+  background-color: rgba(0, 0, 0, 0.5);
+}
 
 input::placeholder {
   color: rgb(104, 104, 104) !important;
@@ -62,7 +79,6 @@ textarea::placeholder {
   /* Set desired height for the spinner */
 }
 
-
 .loading {
   display: none;
   position: fixed;
@@ -99,7 +115,6 @@ textarea::placeholder {
   }
 }
 
-
 .page-link {
   background-color: #302e2e !important;
   color: white !important;
@@ -109,7 +124,6 @@ textarea::placeholder {
   background-color: #0a0a0a !important;
   color: white !important;
 }
-
 
 /* Custom styles for the Gym Detail Component */
 
@@ -122,18 +136,18 @@ textarea::placeholder {
   text-align: center; /* Center align slide content */
 }
 
-.curousalimage{
+.curousalimage {
   width: 100%; /* Ensure images fill the width of the slide */
   height: auto;
   border-radius: 20px;
-  height: 400px !important;  /* Set a maximum height for images */
+  height: 400px !important; /* Set a maximum height for images */
   object-fit: cover; /* Maintain aspect ratio and cover the slide area */
 }
 
-.swiper-button-next{
+.swiper-button-next {
   display: none !important;
 }
-.swiper-button-prev{
+.swiper-button-prev {
   display: none !important;
 }
 /* Optional: Styles for pagination bullets */
@@ -154,8 +168,6 @@ textarea::placeholder {
 .swiper-pagination-bullet-active {
   background-color: rgba(255, 255, 255, 1);
 }
-
-
 
 .gymcards {
   margin-bottom: 20px; /* Add margin between cards */
@@ -186,31 +198,35 @@ textarea::placeholder {
   color: #fff; /* Set text color to white */
 }
 
-
 .custom-control-input:checked ~ .custom-control-label::before {
-  background-color: rgb(47, 0, 255) !important; /* Change the color of the toggle when it is checked */
+  background-color: rgb(
+    47,
+    0,
+    255
+  ) !important; /* Change the color of the toggle when it is checked */
   /* border-color: green; Change the border color of the toggle when it is checked */
 }
 
-
 .custom-control-input:not(:checked) ~ .custom-control-label::before {
-  background-color: rgb(73, 73, 75) !important; /* Change the background color of the toggle when it is not checked */
+  background-color: rgb(
+    73,
+    73,
+    75
+  ) !important; /* Change the background color of the toggle when it is not checked */
   /* border-color: yellow; Change the border color of the checkbox when it is not checked */
 }
 
-
-.checkbox-outside-card.custom-control-input:not(:checked) ~ .custom-control-label::after {
+.checkbox-outside-card.custom-control-input:not(:checked)
+  ~ .custom-control-label::after {
   background-color: #ffffff !important; /* Change the background color of the radio button when it is checked */
   /* border: 2px solid purple; Add a border if you prefer */
 }
-
-
 
 .form-select {
   --bs-form-select-bg-img: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='%236f6b7d' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M5 7.5L10 12.5L15 7.5' stroke='white' stroke-opacity='0.2' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   display: block;
   width: 100%;
-  padding: .422rem 2.45rem .422rem .875rem;
+  padding: 0.422rem 2.45rem 0.422rem 0.875rem;
   font-size: 0.9375rem;
   font-weight: 400;
   line-height: 1.5;
@@ -219,55 +235,56 @@ textarea::placeholder {
   appearance: none;
   background: none !important;
   background-color: none;
-  background-image: var(--bs-form-select-bg-img), var(--bs-form-select-bg-icon, none);
+  background-image: var(--bs-form-select-bg-img),
+    var(--bs-form-select-bg-icon, none);
   background-repeat: no-repeat;
-  background-position: right .875rem center;
+  background-position: right 0.875rem center;
   background-size: 22px 20px;
   border: 1px solid #545455;
   border-radius: var(--bs-border-radius);
-  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-@media(prefers-reduced-motion: reduce) {
+@media (prefers-reduced-motion: reduce) {
   .form-select {
-      transition: none
+    transition: none;
   }
 }
 
 .form-select:focus {
   border-color: #7367f0;
   outline: 0;
-  box-shadow: 0 .125rem .25rem rgba(165, 163, 174, .3)
+  box-shadow: 0 0.125rem 0.25rem rgba(165, 163, 174, 0.3);
 }
 
 .form-select[multiple],
 .form-select[size]:not([size="1"]) {
-  padding-right: .875rem;
-  background-image: none
+  padding-right: 0.875rem;
+  background-image: none;
 }
 
 .form-select:disabled {
   color: #a5a3ae;
-  background-color: rgba(75, 70, 92, .08)
+  background-color: rgba(75, 70, 92, 0.08);
 }
 
 .form-select:-moz-focusring {
   color: rgba(0, 0, 0, 0);
-  text-shadow: 0 0 0 #6f6b7d
+  text-shadow: 0 0 0 #6f6b7d;
 }
 
 .form-select-sm {
-  padding-top: .266rem;
-  padding-bottom: .266rem;
-  padding-left: .625rem;
+  padding-top: 0.266rem;
+  padding-bottom: 0.266rem;
+  padding-left: 0.625rem;
   font-size: 0.8125rem;
-  border-radius: var(--bs-border-radius-sm)
+  border-radius: var(--bs-border-radius-sm);
 }
 
 .form-select-lg {
-  padding-top: .594rem;
-  padding-bottom: .594rem;
+  padding-top: 0.594rem;
+  padding-bottom: 0.594rem;
   padding-left: 1rem;
   font-size: 1.125rem;
-  border-radius: var(--bs-border-radius-lg)
+  border-radius: var(--bs-border-radius-lg);
 }
